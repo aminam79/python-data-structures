@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from linked_list import LinkedList
+from ds.linked_list import LinkedList
 
 
 class TestLinkedList(TestCase):
@@ -18,6 +18,7 @@ class TestLinkedList(TestCase):
         ll.add(2)
         ll.remove()
         self.assertEqual(ll.current.value, 1)
+        self.assertIsNone(ll.current.next)
 
     def test_remove_value_from_empty_linked_list(self):
         ll = LinkedList()

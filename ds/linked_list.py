@@ -33,6 +33,7 @@ class LinkedList:
             return
 
         self.current = self.current.prior
+        self.current.next = None
 
     def move_right(self):
         if not self.current.next:
