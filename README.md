@@ -1,6 +1,7 @@
 - [x] LinkedList
 - [ ] Trie
 - [ ] Binary Tree
+- [ ] Binary Search Tree
 - [ ] Tree
 - [ ] Heap
 - [ ] Graph
