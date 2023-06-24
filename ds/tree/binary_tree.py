@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Any
+from typing import Any, NoReturn
 
 
 class BinaryTreeNode:
@@ -43,10 +43,10 @@ class BinaryTree:
         self.head = BinaryTreeNode(value=init_value)
 
     @property
-    def height(self):
+    def height(self) -> int:
         return self.head.height
 
-    def insert(self, value):
+    def insert(self, value: Any) -> BinaryTreeNode:
         q = deque([self.head])
         new_node = BinaryTreeNode(value=value)
 
@@ -66,7 +66,7 @@ class BinaryTree:
             else:
                 q.append(node.right)
 
-    def delete(self, value):
+    def delete(self, value) -> NoReturn:
         q = deque([self.head])
 
         deleting_node = None
@@ -96,7 +96,7 @@ class BinaryTree:
         else:
             last_node.parent.right = None
 
-    def get_level_nodes(self, target_level: int):
+    def get_level_nodes(self, target_level: int) -> list[BinaryTreeNode]:
         q = deque([(self.head, 1)])
         result = []
 
@@ -116,7 +116,7 @@ class BinaryTree:
 
         return result
 
-    def bfs(self):
+    def bfs(self) -> list[BinaryTreeNode]:
         q = deque([self.head])
         result = []
 
@@ -131,6 +131,51 @@ class BinaryTree:
                 q.append(node.right)
 
         return result
+
+    def in_order(self) -> list[BinaryTreeNode]:
+        ret = []
+
+        def _dfs(node: BinaryTreeNode):
+            if not node:
+                return
+
+            _dfs(node.left)
+            ret.append(node)
+            _dfs(node.right)
+
+        _dfs(self.head)
+
+        return ret
+
+    def pre_order(self) -> list[BinaryTreeNode]:
+        ret = []
+
+        def _dfs(node: BinaryTreeNode):
+            if not node:
+                return
+
+            ret.append(node)
+            _dfs(node.left)
+            _dfs(node.right)
+
+        _dfs(self.head)
+
+        return ret
+
+    def post_order(self) -> list[BinaryTreeNode]:
+        ret = []
+
+        def _dfs(node: BinaryTreeNode):
+            if not node:
+                return
+
+            _dfs(node.left)
+            _dfs(node.right)
+            ret.append(node)
+
+        _dfs(self.head)
+
+        return ret
 
     def __str__(self):
         height = self.height - 1

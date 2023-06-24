@@ -66,6 +66,30 @@ class TestBinaryTree(TestCase):
 
         self.assertEqual(tree.bfs(), [tree.head, node_2, node_3, node_4])
 
+    def test_in_order(self):
+        tree = BinaryTree(init_value=1)
+        node_2 = tree.insert(2)
+        node_3 = tree.insert(3)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.in_order(), [node_4, node_2, tree.head, node_3])
+
+    def test_pre_order(self):
+        tree = BinaryTree(init_value=1)
+        node_2 = tree.insert(2)
+        node_3 = tree.insert(3)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.pre_order(), [tree.head, node_2, node_4, node_3])
+
+    def test_post_order(self):
+        tree = BinaryTree(init_value=1)
+        node_2 = tree.insert(2)
+        node_3 = tree.insert(3)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.post_order(), [node_4, node_2, node_3, tree.head])
+
     def test_str_binary_tree(self):
         tree = BinaryTree(init_value=1)
         tree.insert(2)
