@@ -2,15 +2,35 @@ class TreeNode:
 
     def __init__(self, value, left=None, right=None):
         self.value = value
-        self.left = left
-        self.right = right
+        self._left = left
+        self._right = right
 
         self.parent: TreeNode | None = None
 
         if left:
-            left.parent = self
+            self._left.parent = self
         if right:
-            right.parent = self
+            self._right.parent = self
+
+    @property
+    def left(self):
+        return self._left
+
+    @left.setter
+    def left(self, value):
+        self._left = value
+        if value is not None:
+            self._left.parent = self
+
+    @property
+    def right(self):
+        return self._right
+
+    @right.setter
+    def right(self, value):
+        self._right = value
+        if value is not None:
+            self._right.parent = self
 
     @property
     def is_leaf(self):
