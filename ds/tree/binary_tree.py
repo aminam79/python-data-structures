@@ -40,14 +40,14 @@ class BinaryTreeNode:
 class BinaryTree:
 
     def __init__(self, init_value: Any | None):
-        self.head = BinaryTreeNode(value=init_value)
+        self.root = BinaryTreeNode(value=init_value)
 
     @property
     def height(self) -> int:
-        return self.head.height
+        return self.root.height
 
     def insert(self, value: Any) -> BinaryTreeNode:
-        q = deque([self.head])
+        q = deque([self.root])
         new_node = BinaryTreeNode(value=value)
 
         while q:
@@ -67,7 +67,7 @@ class BinaryTree:
                 q.append(node.right)
 
     def delete(self, value) -> NoReturn:
-        q = deque([self.head])
+        q = deque([self.root])
 
         deleting_node = None
         last_node = None
@@ -97,7 +97,7 @@ class BinaryTree:
             last_node.parent.right = None
 
     def get_level_nodes(self, target_level: int) -> list[BinaryTreeNode]:
-        q = deque([(self.head, 1)])
+        q = deque([(self.root, 1)])
         result = []
 
         while q:
@@ -117,7 +117,7 @@ class BinaryTree:
         return result
 
     def bfs(self) -> list[BinaryTreeNode]:
-        q = deque([self.head])
+        q = deque([self.root])
         result = []
 
         while q:
@@ -143,7 +143,7 @@ class BinaryTree:
             ret.append(node)
             _dfs(node.right)
 
-        _dfs(self.head)
+        _dfs(self.root)
 
         return ret
 
@@ -158,7 +158,7 @@ class BinaryTree:
             _dfs(node.left)
             _dfs(node.right)
 
-        _dfs(self.head)
+        _dfs(self.root)
 
         return ret
 
@@ -173,7 +173,7 @@ class BinaryTree:
             _dfs(node.right)
             ret.append(node)
 
-        _dfs(self.head)
+        _dfs(self.root)
 
         return ret
 
@@ -190,6 +190,6 @@ class BinaryTree:
 
         col = 2 ** (height+1) - 1
         matrix = [[" " for _ in range(col)] for __ in range(height + 1)]
-        gen_matrix(self.head, matrix, 0, (col-1)//2)
+        gen_matrix(self.root, matrix, 0, (col - 1) // 2)
 
         return "\n".join(["".join(r) for r in matrix])
