@@ -32,11 +32,11 @@ class BST(BaseTree):
             if not node:
                 return False
 
-            if node.left.value == value:
+            if node.left and node.left.value == value:
                 node.left = None
                 return True
 
-            if node.right.value == value:
+            if node.right and node.right.value == value:
                 node.right = None
                 return True
 
