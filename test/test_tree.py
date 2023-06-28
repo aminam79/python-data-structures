@@ -138,3 +138,38 @@ class TestBST(TestCase):
         tree.root.right = TreeNode(value=3)
 
         self.assertIsNone(tree.search(value=4))
+
+    def test_bst_insert_with_not_existed_value_return_new_node(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+
+        new_node = tree.insert(4)
+        self.assertEqual(new_node.value, 4)
+        self.assertTrue(new_node.is_leaf)
+        self.assertEqual(new_node.parent.value, 3)
+
+    def test_bst_insert_with_existed_value_return_none(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+
+        new_node = tree.insert(3)
+        self.assertIsNone(new_node)
+
+    def test_bst_delete_with_not_existed_value_return_false(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+
+        new_node = tree.delete(4)
+        self.assertFalse(new_node)
+
+    def test_bst_delete_with_existed_value_return_true(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+
+        new_node = tree.delete(3)
+        self.assertTrue(new_node)
+        self.assertIsNone(tree.root.right)
