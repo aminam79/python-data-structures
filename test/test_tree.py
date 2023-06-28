@@ -1,6 +1,8 @@
 from unittest import TestCase
 
+from ds.tree import TreeNode
 from ds.tree.binary_tree import BinaryTree
+from ds.tree.bst import BST
 
 
 class TestBinaryTree(TestCase):
@@ -119,3 +121,20 @@ class TestBinaryTree(TestCase):
             " 2   3 \n"
             "4 5 6 7"
         )
+
+
+class TestBST(TestCase):
+
+    def test_bst_search_with_existed_value_return_node(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+
+        self.assertEqual(tree.search(value=3), tree.root.right)
+
+    def test_bst_search_with_not_existed_value_return_none(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+
+        self.assertIsNone(tree.search(value=4))

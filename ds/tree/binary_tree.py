@@ -1,54 +1,21 @@
 from collections import deque
 from typing import Any, NoReturn
 
-
-class BinaryTreeNode:
-
-    def __init__(self, value, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
-
-        self.parent: BinaryTreeNode | None = None
-
-        if left:
-            left.parent = self
-        if right:
-            right.parent = self
-
-    @property
-    def is_leaf(self):
-        return not self.left and not self.right
-
-    @property
-    def height(self):
-        if self.is_leaf:
-            return 1
-
-        left_height = self.left.height if self.left else 0
-        right_height = self.right.height if self.right else 0
-
-        return max(left_height, right_height) + 1
-
-    def __str__(self):
-        return f"Node {self.value}"
-
-    def __repr__(self):
-        return self.__str__()
+from ds.tree import TreeNode
 
 
 class BinaryTree:
 
     def __init__(self, init_value: Any | None):
-        self.root = BinaryTreeNode(value=init_value)
+        self.root = TreeNode(value=init_value)
 
     @property
     def height(self) -> int:
         return self.root.height
 
-    def insert(self, value: Any) -> BinaryTreeNode:
+    def insert(self, value: Any) -> TreeNode:
         q = deque([self.root])
-        new_node = BinaryTreeNode(value=value)
+        new_node = TreeNode(value=value)
 
         while q:
             node = q.popleft()
@@ -96,7 +63,7 @@ class BinaryTree:
         else:
             last_node.parent.right = None
 
-    def get_level_nodes(self, target_level: int) -> list[BinaryTreeNode]:
+    def get_level_nodes(self, target_level: int) -> list[TreeNode]:
         q = deque([(self.root, 1)])
         result = []
 
@@ -116,7 +83,7 @@ class BinaryTree:
 
         return result
 
-    def bfs(self) -> list[BinaryTreeNode]:
+    def bfs(self) -> list[TreeNode]:
         q = deque([self.root])
         result = []
 
@@ -132,10 +99,10 @@ class BinaryTree:
 
         return result
 
-    def in_order(self) -> list[BinaryTreeNode]:
+    def in_order(self) -> list[TreeNode]:
         ret = []
 
-        def _dfs(node: BinaryTreeNode):
+        def _dfs(node: TreeNode):
             if not node:
                 return
 
@@ -147,10 +114,10 @@ class BinaryTree:
 
         return ret
 
-    def pre_order(self) -> list[BinaryTreeNode]:
+    def pre_order(self) -> list[TreeNode]:
         ret = []
 
-        def _dfs(node: BinaryTreeNode):
+        def _dfs(node: TreeNode):
             if not node:
                 return
 
@@ -162,10 +129,10 @@ class BinaryTree:
 
         return ret
 
-    def post_order(self) -> list[BinaryTreeNode]:
+    def post_order(self) -> list[TreeNode]:
         ret = []
 
-        def _dfs(node: BinaryTreeNode):
+        def _dfs(node: TreeNode):
             if not node:
                 return
 
@@ -180,7 +147,7 @@ class BinaryTree:
     def __str__(self):
         height = self.height - 1
 
-        def gen_matrix(node: BinaryTreeNode, m: list[list], i: int, j: int):
+        def gen_matrix(node: TreeNode, m: list[list], i: int, j: int):
             if not node:
                 return
 
