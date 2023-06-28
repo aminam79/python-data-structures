@@ -185,3 +185,69 @@ class TestBST(TestCase):
         new_node = tree.delete(3)
         self.assertTrue(new_node)
         self.assertIsNone(tree.root.right)
+
+    def test_height_node(self):
+        tree = BST(init_value=1)
+        node_2 = tree.insert(2)
+        node_3 = tree.insert(3)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(node_2.height, 3)
+        self.assertEqual(node_3.height, 2)
+        self.assertEqual(node_4.height, 1)
+
+    def test_get_level_nodes(self):
+        tree = BST(init_value=3)
+        node_2 = tree.insert(2)
+        node_1 = tree.insert(1)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.get_level_nodes(target_level=1), [tree.root])
+        self.assertEqual(tree.get_level_nodes(target_level=2), [node_2, node_4])
+        self.assertEqual(tree.get_level_nodes(target_level=3), [node_1])
+
+    def test_bfs(self):
+        tree = BST(init_value=2)
+        node_2 = tree.insert(1)
+        node_3 = tree.insert(3)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.bfs(), [tree.root, node_2, node_3, node_4])
+
+    def test_in_order(self):
+        tree = BST(init_value=3)
+        node_2 = tree.insert(2)
+        node_1 = tree.insert(1)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.in_order(), [node_1, node_2, tree.root, node_4])
+
+    def test_pre_order(self):
+        tree = BST(init_value=3)
+        node_2 = tree.insert(2)
+        node_1 = tree.insert(1)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.pre_order(), [tree.root, node_2, node_1, node_4])
+
+    def test_post_order(self):
+        tree = BST(init_value=3)
+        node_2 = tree.insert(2)
+        node_1 = tree.insert(1)
+        node_4 = tree.insert(4)
+
+        self.assertEqual(tree.post_order(), [node_1, node_2, node_4, tree.root])
+
+    def test_str_bst(self):
+        tree = BST(init_value=3)
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(4)
+        tree.insert(5)
+
+        self.assertEqual(
+            str(tree),
+            "   3   \n"
+            " 1   4 \n"
+            "  2   5"
+        )

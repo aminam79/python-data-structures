@@ -1,4 +1,5 @@
 import abc
+from collections import deque
 
 
 class TreeNode:
@@ -72,6 +73,87 @@ class BaseTree(abc.ABC):
     @abc.abstractmethod
     def delete(self, value) -> bool:
         raise NotImplementedError
+
+    def get_level_nodes(self, target_level: int) -> list[TreeNode]:
+        q = deque([(self.root, 1)])
+        result = []
+
+        while q:
+            node, level = q.popleft()
+
+            if level == target_level:
+                result.append(node)
+            elif level > target_level:
+                break
+
+            if node.left:
+                q.append((node.left, level + 1))
+
+            if node.right:
+                q.append((node.right, level + 1))
+
+        return result
+
+    def bfs(self) -> list[TreeNode]:
+        q = deque([self.root])
+        result = []
+
+        while q:
+            node = q.popleft()
+            result.append(node)
+
+            if node.left:
+                q.append(node.left)
+
+            if node.right:
+                q.append(node.right)
+
+        return result
+
+    def in_order(self) -> list[TreeNode]:
+        ret = []
+
+        def _dfs(node: TreeNode):
+            if not node:
+                return
+
+            _dfs(node.left)
+            ret.append(node)
+            _dfs(node.right)
+
+        _dfs(self.root)
+
+        return ret
+
+    def pre_order(self) -> list[TreeNode]:
+        ret = []
+
+        def _dfs(node: TreeNode):
+            if not node:
+                return
+
+            ret.append(node)
+            _dfs(node.left)
+            _dfs(node.right)
+
+        _dfs(self.root)
+
+        return ret
+
+    def post_order(self) -> list[TreeNode]:
+        ret = []
+
+        def _dfs(node: TreeNode):
+            if not node:
+                return
+
+            _dfs(node.left)
+            _dfs(node.right)
+            ret.append(node)
+
+        _dfs(self.root)
+
+        return ret
 
     def __str__(self):
         height = self.height - 1
