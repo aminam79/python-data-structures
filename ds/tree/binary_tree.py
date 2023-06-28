@@ -160,3 +160,6 @@ class BinaryTree:
         gen_matrix(self.root, matrix, 0, (col - 1) // 2)
 
         return "\n".join(["".join(r) for r in matrix])
+
+    def __repr__(self):
+        return f"Binary tree with {self.root} root"
