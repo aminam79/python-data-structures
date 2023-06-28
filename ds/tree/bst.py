@@ -1,10 +1,7 @@
-from ds.tree import TreeNode
+from ds.tree import TreeNode, BaseTree
 
 
-class BST:
-
-    def __init__(self, init_value):
-        self.root = TreeNode(value=init_value)
+class BST(BaseTree):
 
     def insert(self, value) -> TreeNode | None:
         created_node = None

@@ -1,17 +1,10 @@
 from collections import deque
 from typing import Any, NoReturn
 
-from ds.tree import TreeNode
+from ds.tree import TreeNode, BaseTree
 
 
-class BinaryTree:
-
-    def __init__(self, init_value: Any | None):
-        self.root = TreeNode(value=init_value)
-
-    @property
-    def height(self) -> int:
-        return self.root.height
+class BinaryTree(BaseTree):
 
     def insert(self, value: Any) -> TreeNode:
         q = deque([self.root])
@@ -54,7 +47,7 @@ class BinaryTree:
                 q.append(node.right)
 
         if not deleting_node:
-            return
+            return False
 
         deleting_node.value = last_node.value
 
@@ -62,6 +55,8 @@ class BinaryTree:
             last_node.parent.left = None
         else:
             last_node.parent.right = None
+
+        return True
 
     def get_level_nodes(self, target_level: int) -> list[TreeNode]:
         q = deque([(self.root, 1)])
@@ -143,23 +138,3 @@ class BinaryTree:
         _dfs(self.root)
 
         return ret
-
-    def __str__(self):
-        height = self.height - 1
-
-        def gen_matrix(node: TreeNode, m: list[list], i: int, j: int):
-            if not node:
-                return
-
-            m[i][j] = str(node.value)
-            gen_matrix(node.left, m, i+1, j-(2 ** (height-i-1)))
-            gen_matrix(node.right, m, i+1, j+(2 ** (height-i-1)))
-
-        col = 2 ** (height+1) - 1
-        matrix = [[" " for _ in range(col)] for __ in range(height + 1)]
-        gen_matrix(self.root, matrix, 0, (col - 1) // 2)
-
-        return "\n".join(["".join(r) for r in matrix])
-
-    def __repr__(self):
-        return f"Binary tree with {self.root} root"

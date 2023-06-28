@@ -1,3 +1,6 @@
+import abc
+
+
 class TreeNode:
 
     def __init__(self, value, left=None, right=None):
@@ -51,3 +54,41 @@ class TreeNode:
 
     def __repr__(self):
         return self.__str__()
+
+
+class BaseTree(abc.ABC):
+
+    def __init__(self, init_value):
+        self.root = TreeNode(value=init_value)
+
+    @property
+    def height(self) -> int:
+        return self.root.height
+
+    @abc.abstractmethod
+    def insert(self, value) -> TreeNode:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def delete(self, value) -> bool:
+        raise NotImplementedError
+
+    def __str__(self):
+        height = self.height - 1
+
+        def gen_matrix(node: TreeNode, m: list[list], i: int, j: int):
+            if not node:
+                return
+
+            m[i][j] = str(node.value)
+            gen_matrix(node.left, m, i+1, j-(2 ** (height-i-1)))
+            gen_matrix(node.right, m, i+1, j+(2 ** (height-i-1)))
+
+        col = 2 ** (height+1) - 1
+        matrix = [[" " for _ in range(col)] for __ in range(height + 1)]
+        gen_matrix(self.root, matrix, 0, (col - 1) // 2)
+
+        return "\n".join(["".join(r) for r in matrix])
+
+    def __repr__(self):
+        return f"Binary tree with {self.root} root"
