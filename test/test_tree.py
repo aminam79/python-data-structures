@@ -338,6 +338,16 @@ class TestTreeNode(TestCase):
         self.assertEqual(root.children[0].children[0].height, 2)
         self.assertEqual(root.children[0].children[0].children[0].height, 1)
 
+    def test_tree_node_str(self):
+        node_1 = TreeNode(value=1)
+        TreeNode(value=2, parent=node_1)
+        TreeNode(value=3, parent=node_1)
+
+        self.assertEqual(
+            str(node_1),
+            '1\n\t2\n\t3\n'
+        )
+
 
 class TestTree(TestCase):
 
@@ -383,4 +393,30 @@ class TestTree(TestCase):
         self.assertEqual(
             tree.get_level_nodes(3),
             [node_4, node_5, node_6, node_7, node_8, node_9]
+        )
+
+    def test_tree_str(self):
+        tree = Tree(init_value=1)
+        tree.root.add_child(2)
+        tree.root.add_child(3)
+
+        self.assertEqual(
+            str(tree),
+            "1\n\t2\n\t3\n"
+        )
+
+    def test_tree_str_2(self):
+        tree = Tree(init_value=1)
+        node_2 = tree.root.add_child(2)
+        node_3 = tree.root.add_child(3)
+        node_2.add_child(4)
+        node_2.add_child(5)
+        node_2.add_child(6)
+        node_3.add_child(7)
+        node_3.add_child(8)
+        node_3.add_child(9)
+
+        self.assertEqual(
+            str(tree),
+            '1\n\t2\n\t\t4\n\t\t5\n\t\t6\n\t3\n\t\t7\n\t\t8\n\t\t9\n'
         )

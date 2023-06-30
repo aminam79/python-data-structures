@@ -40,14 +40,22 @@ class TreeNode:
     def __repr__(self):
         return f"Node {self.value}"
 
-    def __str__(self):
-        return self.__repr__()
+    def __str__(self, level=0):
+        ret = "\t" * level + str(self.value) + "\n"
+        for child in self.children:
+            ret += child.__str__(level + 1)
+
+        return ret
 
 
 class Tree:
 
     def __init__(self, init_value=None):
         self.root = TreeNode(value=init_value)
+
+    @property
+    def height(self):
+        return self.root.height
 
     def bfs(self) -> list[TreeNode]:
         res = []
@@ -90,3 +98,6 @@ class Tree:
                 q.extend([(child, level + 1) for child in node.children])
 
         return res
+
+    def __str__(self):
+        return str(self.root)
