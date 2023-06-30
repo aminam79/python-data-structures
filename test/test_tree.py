@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from ds.tree.binary_tree import BinaryTree, BinaryTreeNode, BST
 from ds.tree.tree import TreeNode, Tree
+from ds.tree.trie import TrieNode
 
 
 class TestBinaryTree(TestCase):
@@ -420,3 +421,36 @@ class TestTree(TestCase):
             str(tree),
             '1\n\t2\n\t\t4\n\t\t5\n\t\t6\n\t3\n\t\t7\n\t\t8\n\t\t9\n'
         )
+
+
+class TestTrieNode(TestCase):
+
+    def test_trie_node_with_parent(self):
+        root = TrieNode(value="a")
+        node_2 = TrieNode(value="m", parent=root)
+
+        self.assertEqual(node_2.parent, root)
+        self.assertEqual(root.children, {node_2})
+
+    def test_trie_node_add_child(self):
+        root = TrieNode(value="a")
+        root.add_child("m")
+        root.add_child("i")
+        root.add_child("i")
+
+        self.assertEqual(root.children, {TrieNode(value="m"), TrieNode(value="i")})
+
+    def test_trie_node_remove_child(self):
+        root = TrieNode(value="a")
+        root.add_child("m")
+        root.add_child("i")
+        root.remove_child("i")
+
+        self.assertEqual(root.children, {TrieNode(value="m")})
+
+    def test_trie_node_equality(self):
+        root = TrieNode(value="a")
+        node_1 = TrieNode(value="i", parent=root)
+        node_2 = TrieNode(value="i", parent=root)
+
+        self.assertEqual(node_1, node_2)
