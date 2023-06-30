@@ -61,3 +61,32 @@ class Tree:
                 q.extend(node.children)
 
         return res
+
+    def dfs(self) -> list[TreeNode]:
+        res = []
+
+        def _dfs(node: TreeNode):
+            res.append(node)
+            for node in node.children:
+                _dfs(node)
+
+        _dfs(self.root)
+        return res
+
+    def get_level_nodes(self, target_level: int) -> list[TreeNode]:
+        res = []
+
+        q = deque([(self.root, 1)])
+
+        while q:
+            node, level = q.popleft()
+
+            if level == target_level:
+                res.append(node)
+            elif level > target_level:
+                break
+
+            if not node.is_leaf:
+                q.extend([(child, level + 1) for child in node.children])
+
+        return res

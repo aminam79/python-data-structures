@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from ds.tree.binary_tree import BinaryTree, BinaryTreeNode, BST
-from ds.tree.tree import TreeNode
+from ds.tree.tree import TreeNode, Tree
 
 
 class TestBinaryTree(TestCase):
@@ -339,3 +339,48 @@ class TestTreeNode(TestCase):
         self.assertEqual(root.children[0].children[0].children[0].height, 1)
 
 
+class TestTree(TestCase):
+
+    def test_tree_bfs(self):
+        tree = Tree(init_value=1)
+        node_2 = tree.root.add_child(2)
+        node_3 = tree.root.add_child(3)
+        node_4 = node_2.add_child(4)
+        node_5 = node_2.add_child(5)
+        node_6 = node_3.add_child(6)
+        node_7 = node_3.add_child(7)
+
+        self.assertEqual(
+            tree.bfs(),
+            [tree.root, node_2, node_3, node_4, node_5, node_6, node_7])
+
+    def test_tree_dfs(self):
+        tree = Tree(init_value=1)
+        node_2 = tree.root.add_child(2)
+        node_3 = tree.root.add_child(3)
+        node_4 = node_2.add_child(4)
+        node_5 = node_2.add_child(5)
+        node_6 = node_2.add_child(6)
+        node_7 = node_3.add_child(7)
+        node_8 = node_3.add_child(8)
+        node_9 = node_3.add_child(9)
+
+        self.assertEqual(
+            tree.dfs(),
+            [tree.root, node_2, node_4, node_5, node_6, node_3, node_7, node_8, node_9])
+
+    def test_tree_get_level_nodes(self):
+        tree = Tree(init_value=1)
+        node_2 = tree.root.add_child(2)
+        node_3 = tree.root.add_child(3)
+        node_4 = node_2.add_child(4)
+        node_5 = node_2.add_child(5)
+        node_6 = node_2.add_child(6)
+        node_7 = node_3.add_child(7)
+        node_8 = node_3.add_child(8)
+        node_9 = node_3.add_child(9)
+
+        self.assertEqual(
+            tree.get_level_nodes(3),
+            [node_4, node_5, node_6, node_7, node_8, node_9]
+        )
