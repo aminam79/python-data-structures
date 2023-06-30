@@ -28,24 +28,45 @@ class BST(BaseTree):
 
     def delete(self, value) -> bool:
 
+        found = False
+
         def _delete(node: TreeNode):
             if not node:
-                return False
+                return node
 
-            if node.left and node.left.value == value:
-                node.left = None
-                return True
+            if node.value == value:
+                nonlocal found
+                found = True
 
-            if node.right and node.right.value == value:
-                node.right = None
-                return True
+                if node.is_leaf:
+                    return None
+
+                if node.left and not node.right:
+                    return node.left
+
+                if node.right and not node.left:
+                    return node.right
+
+                else:
+                    current = node.right
+                    while current.left:
+                        current = current.left
+
+                    node.value = current.value
+
+                    current.parent.left = None
+
+                    return node
 
             if node.value < value:
-                return _delete(node.right)
+                node.right = _delete(node.right)
             else:
-                return _delete(node.left)
+                node.left = _delete(node.left)
 
-        return _delete(self.root)
+            return node
+
+        _delete(self.root)
+        return found
 
     def search(self, value) -> TreeNode | None:
         def _search(node: TreeNode):

@@ -177,7 +177,32 @@ class TestBST(TestCase):
         new_node = tree.delete(4)
         self.assertFalse(new_node)
 
-    def test_bst_delete_with_existed_value_return_true(self):
+    def test_bst_delete_with_existed_value_with_single_left_child_return_true(self):
+        tree = BST(init_value=3)
+        tree.root.left = TreeNode(value=2)
+        tree.root.left.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=4)
+
+        new_node = tree.delete(2)
+        self.assertTrue(new_node)
+        self.assertIsNone(tree.root.left.left)
+        self.assertEqual(tree.root.value, 3)
+        self.assertEqual(tree.root.left.value, 1)
+
+    def test_bst_delete_with_existed_value_with_single_right_child_return_true(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=3)
+        tree.root.right.right = TreeNode(value=4)
+
+        new_node = tree.delete(3)
+        self.assertTrue(new_node)
+        self.assertIsNone(tree.root.right.right)
+        self.assertEqual(tree.root.right.value, 4)
+        self.assertEqual(tree.root.value, 2)
+        self.assertEqual(tree.root.left.value, 1)
+
+    def test_bst_delete_with_existed_value_without_child_return_true(self):
         tree = BST(init_value=2)
         tree.root.left = TreeNode(value=1)
         tree.root.right = TreeNode(value=3)
@@ -185,6 +210,25 @@ class TestBST(TestCase):
         new_node = tree.delete(3)
         self.assertTrue(new_node)
         self.assertIsNone(tree.root.right)
+        self.assertEqual(tree.root.value, 2)
+        self.assertEqual(tree.root.left.value, 1)
+
+    def test_bst_delete_with_existed_value_child_return_true(self):
+        tree = BST(init_value=2)
+        tree.root.left = TreeNode(value=1)
+        tree.root.right = TreeNode(value=4)
+        tree.root.right.left = TreeNode(value=3)
+        tree.root.right.right = TreeNode(value=7)
+        tree.root.right.right.left = TreeNode(value=6)
+        tree.root.right.right.right = TreeNode(value=8)
+
+        new_node = tree.delete(4)
+        self.assertTrue(new_node)
+        self.assertIsNone(tree.root.right.right.left)
+        self.assertEqual(tree.root.right.value, 6)
+        self.assertEqual(tree.root.right.left.value, 3)
+        self.assertEqual(tree.root.right.right.value, 7)
+        self.assertEqual(tree.root.right.right.right.value, 8)
 
     def test_height_node(self):
         tree = BST(init_value=1)
