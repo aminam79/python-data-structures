@@ -57,7 +57,7 @@ class TreeNode:
         return self.__str__()
 
 
-class BaseTree(abc.ABC):
+class BaseBinaryTree(abc.ABC):
 
     def __init__(self, init_value):
         self.root = TreeNode(value=init_value)

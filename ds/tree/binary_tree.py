@@ -1,10 +1,10 @@
 from collections import deque
 from typing import Any, NoReturn
 
-from ds.tree import TreeNode, BaseTree
+from ds.tree import TreeNode, BaseBinaryTree
 
 
-class BinaryTree(BaseTree):
+class BinaryTree(BaseBinaryTree):
 
     def insert(self, value: Any) -> TreeNode:
         q = deque([self.root])
