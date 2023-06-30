@@ -48,13 +48,18 @@ class BST(BaseTree):
                     return node.right
 
                 else:
-                    current = node.right
+                    parent = node
+                    current = parent.right
                     while current.left:
+                        parent = current
                         current = current.left
 
-                    node.value = current.value
+                    if parent != node:
+                        parent.left = current.right
+                    else:
+                        parent.right = current.right
 
-                    current.parent.left = None
+                    node.value = current.value
 
                     return node
 
