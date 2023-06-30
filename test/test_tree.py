@@ -1,8 +1,6 @@
 from unittest import TestCase
 
-from ds.tree import TreeNode
-from ds.tree.binary_tree import BinaryTree
-from ds.tree.bst import BST
+from ds.tree.binary_tree import BinaryTree, BinaryTreeNode, BST
 
 
 class TestBinaryTree(TestCase):
@@ -127,15 +125,15 @@ class TestBST(TestCase):
 
     def test_bst_search_with_existed_value_return_node(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
 
         self.assertEqual(tree.search(value=3), tree.root.right)
 
     def test_bst_search_with_not_existed_value_return_none(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
 
         self.assertIsNone(tree.search(value=4))
 
@@ -153,8 +151,8 @@ class TestBST(TestCase):
 
     def test_bst_insert_with_not_existed_value_return_new_node(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
 
         new_node = tree.insert(4)
         self.assertEqual(new_node.value, 4)
@@ -163,25 +161,25 @@ class TestBST(TestCase):
 
     def test_bst_insert_with_existed_value_return_none(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
 
         new_node = tree.insert(3)
         self.assertIsNone(new_node)
 
     def test_bst_delete_with_not_existed_value_return_false(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
 
         new_node = tree.delete(4)
         self.assertFalse(new_node)
 
     def test_bst_delete_with_existed_value_with_single_left_child_return_true(self):
         tree = BST(init_value=3)
-        tree.root.left = TreeNode(value=2)
-        tree.root.left.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=4)
+        tree.root.left = BinaryTreeNode(value=2)
+        tree.root.left.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=4)
 
         new_node = tree.delete(2)
         self.assertTrue(new_node)
@@ -191,9 +189,9 @@ class TestBST(TestCase):
 
     def test_bst_delete_with_existed_value_with_single_right_child_return_true(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
-        tree.root.right.right = TreeNode(value=4)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
+        tree.root.right.right = BinaryTreeNode(value=4)
 
         new_node = tree.delete(3)
         self.assertTrue(new_node)
@@ -204,8 +202,8 @@ class TestBST(TestCase):
 
     def test_bst_delete_with_existed_value_without_child_return_true(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=3)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=3)
 
         new_node = tree.delete(3)
         self.assertTrue(new_node)
@@ -215,12 +213,12 @@ class TestBST(TestCase):
 
     def test_bst_delete_with_existed_value_child_return_true(self):
         tree = BST(init_value=2)
-        tree.root.left = TreeNode(value=1)
-        tree.root.right = TreeNode(value=4)
-        tree.root.right.left = TreeNode(value=3)
-        tree.root.right.right = TreeNode(value=7)
-        tree.root.right.right.left = TreeNode(value=6)
-        tree.root.right.right.right = TreeNode(value=8)
+        tree.root.left = BinaryTreeNode(value=1)
+        tree.root.right = BinaryTreeNode(value=4)
+        tree.root.right.left = BinaryTreeNode(value=3)
+        tree.root.right.right = BinaryTreeNode(value=7)
+        tree.root.right.right.left = BinaryTreeNode(value=6)
+        tree.root.right.right.right = BinaryTreeNode(value=8)
 
         new_node = tree.delete(4)
         self.assertTrue(new_node)
