@@ -1,10 +1,10 @@
 - [x] LinkedList
-- [ ] Trie
+- [x] Trie
 - [x] Binary Tree
 - [x] Binary Search Tree
-- [ ] Tree
+- [x] Tree
+- [ ] Btree
 - [ ] Heap
 - [ ] Graph
 - [ ] Stack
 - [ ] Queue
-- [ ] Btree
