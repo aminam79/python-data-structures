@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from ds.tree.binary_tree import BinaryTree, BinaryTreeNode, BST
 from ds.tree.tree import TreeNode, Tree
-from ds.tree.trie import TrieNode
+from ds.tree.trie import TrieNode, Trie
 
 
 class TestBinaryTree(TestCase):
@@ -430,7 +430,7 @@ class TestTrieNode(TestCase):
         node_2 = TrieNode(value="m", parent=root)
 
         self.assertEqual(node_2.parent, root)
-        self.assertEqual(root.children, {node_2})
+        self.assertEqual(root.children, {"m": node_2})
 
     def test_trie_node_add_child(self):
         root = TrieNode(value="a")
@@ -438,7 +438,7 @@ class TestTrieNode(TestCase):
         root.add_child("i")
         root.add_child("i")
 
-        self.assertEqual(root.children, {TrieNode(value="m"), TrieNode(value="i")})
+        self.assertEqual(root.children, {"m": TrieNode(value="m"), "i": TrieNode(value="i")})
 
     def test_trie_node_remove_child(self):
         root = TrieNode(value="a")
@@ -446,7 +446,7 @@ class TestTrieNode(TestCase):
         root.add_child("i")
         root.remove_child("i")
 
-        self.assertEqual(root.children, {TrieNode(value="m")})
+        self.assertEqual(root.children, {"m": TrieNode(value="m")})
 
     def test_trie_node_equality(self):
         root = TrieNode(value="a")
@@ -454,3 +454,30 @@ class TestTrieNode(TestCase):
         node_2 = TrieNode(value="i", parent=root)
 
         self.assertEqual(node_1, node_2)
+
+
+class TestTrie(TestCase):
+
+    def test_trie_insert(self):
+        tree = Trie()
+        tree.insert("amin")
+
+        self.assertEqual(tree.root, None)
+        self.assertEqual(tree.root.children.a, "a")
+        self.assertEqual(tree.root.children.a.children.m, "m")
+        self.assertEqual(tree.root.children.a.children.m.children.i, "i")
+        self.assertEqual(tree.root.children.a.children.m.children.i.children.n, "n")
+        self.assertTrue(tree.root.children.a.children.m.children.i.children.n.is_end_of_word)
+
+    def test_trie_search_with_existed_word(self):
+        tree = Trie()
+        tree.insert("amin")
+
+        self.assertTrue(tree.search("amin"))
+
+    def test_trie_search_without_existed_word(self):
+        tree = Trie()
+        tree.insert("amin")
+
+        self.assertFalse(tree.search("ami"))
+        self.assertFalse(tree.search("test"))

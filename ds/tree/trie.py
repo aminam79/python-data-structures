@@ -1,3 +1,6 @@
+from collections import UserDict
+
+
 class TrieNode:
 
     def __init__(self, value: str, parent=None, is_end_of_word: bool = False):
@@ -8,14 +11,14 @@ class TrieNode:
         if parent:
             parent.children.add(self)
 
-        self.children: set[TrieNode] = set()
+        self.children = TrieNodeChildren()
 
     @property
     def height(self):
         if self.is_leaf:
             return 1
 
-        return max([node.height for node in self.children]) + 1
+        return max([node.height for node in self.children.values()]) + 1
 
     @property
     def is_leaf(self) -> bool:
@@ -24,16 +27,19 @@ class TrieNode:
     def add_child(self, value: str):
         new_node = TrieNode(value=value)
         new_node.parent = self
-        self.children.add(new_node)
+        self.children[value] = new_node
         return new_node
 
     def remove_child(self, value: str):
         remove_node = TrieNode(value=value)
         remove_node.parent = self
-        self.children.remove(remove_node)
+        self.children.pop(value)
 
     def __eq__(self, other):
-        return self.value == other.value
+        if isinstance(other, self.__class__):
+            return self.value == other.value
+
+        return self.value == other
 
     def __hash__(self):
         return hash(self.value)
@@ -43,3 +49,42 @@ class TrieNode:
 
     def __repr__(self):
         return self.__str__()
+
+
+class TrieNodeChildren(UserDict):
+
+    def __getattr__(self, item):
+        return self.data.get(item)
+
+    def __eq__(self, other):
+        return self.data == other
+
+    def add(self, node: TrieNode):
+        self.data[node.value] = node
+
+
+class Trie:
+
+    def __init__(self, init_value=None):
+        self.root = TrieNode(value=init_value)
+
+    def insert(self, word: str):
+        current = self.root
+        for char in word:
+            new_node = current.add_child(char)
+            current = new_node
+
+        current.is_end_of_word = True
+
+    def search(self, word: str) -> bool:
+        current = self.root
+        for char in word:
+            if char not in current.children:
+                return False
+
+            current = current.children[char]
+
+        if not current.is_end_of_word:
+            return False
+
+        return True
